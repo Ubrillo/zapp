@@ -7,6 +7,4 @@ int main() {
     Zapp &zaap = fantasia;
 
     cout << zaap.getCardDetails(1000) << endl;
-
-
 }

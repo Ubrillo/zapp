@@ -16,4 +16,5 @@ add_executable(zapp main.cpp
         park/park.cpp
         park/park.h
         park/zapp.h
-        park/parkTester.cpp)
+        park/parkTester.cpp
+        park/parkUI.cpp)

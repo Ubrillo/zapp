@@ -3,8 +3,9 @@
 //
 #include <iostream>
 #include "Area.h"
-// int main() {
-//
-//     Area area(1, "bed", 1, 1);
-//     std::cout << area.toString() << endl;
-// }
+using namespace std;
+ //
+ // int main() {
+ //     Area lobby = Area(0, "Lobby", 0, 1000);
+ //     // std::cout << area.toString() << endl;
+ //    }
