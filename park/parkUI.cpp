@@ -10,30 +10,15 @@ using namespace std;
 Park fantasia("Fantasia Pleasure Park");
 Zapp &zapp = fantasia;
 
-int getOption() {
-    cout << "what would you like to do?" << endl;
-    cout << "0. Quit" << endl;
-    cout << "1. List all area details" << endl;
-    cout << "2. List all cards in each area" << endl;
-    cout << "3. find card location" << endl;
-    cout << "4. say if card can move by bridge" << endl;
-    cout << "5. move a card by brigde" << endl;
-    cout <<"6. top up credits" << endl;
-    cout << "7. get card details" << endl;
-    cout << "8. list all cards in one area" << endl;
 
-    cout << "Enter your choice: " << endl;
-    int option;
-    cin >> option;
-    return option;
-}
 
 /**
  * display the area of a speicifed card
  * @param: card_id - the id of the card
  */
 void findCardLocation(int cardId) {
-    cout << zapp.getCardLocation(cardId) << endl;
+    string data = zapp.getCardLocation(cardId);
+    data.empty() ? cout << "card not found!!"<< endl : cout << data << endl;
 }
 
 
@@ -42,7 +27,7 @@ void findCardLocation(int cardId) {
  * triggers corresponding method to locate a specified card area
  */
 void cardLocator() {
-    cout << "please enter card id" << endl;
+    cout << "Enter Card ID:" << endl;
     int id;
     cin >> id;
     findCardLocation(id);
@@ -64,11 +49,12 @@ void moveNow(int cardId, string brCode) {
  * triggers corresponding method to move a card
  */
 void moveCard() {
-    cout << "please enter card id" << endl;
+    cout << "Enter Card ID:" << endl;
     int cardId;
     cin >> cardId;
-    cout << "please input bridgecode in UPPERCASE:"<< endl;
+    cout << "Enter  bridge code in UPPERCASE:"<< endl;
     string bridgecode;
+    cin >> bridgecode;
     moveNow(cardId, bridgecode);
 }
 
@@ -186,23 +172,20 @@ void listOneArea() {
     cout << "Enter area name: " << endl;
     string str;
     cin >> str;
-    cout << zapp.getAllCardsInOneArea(str);
-    cout<< endl;
+    cout << zapp.getAllCardsInOneArea(str) <<endl;
 }
-
-
 
 /**
  * display true of false if a card can cross a bridge.
  */
 void tryTravel() {
-    cout << "please enter card id" << endl;
+    cout << "Enter card ID" << endl;
     int cardId;
     cin >> cardId;
     cout << "please input bridgecode in UPPERCASE:" << endl;
     string bridgecode;
     cin >> bridgecode;
-    cout << zapp.canMove(cardId, bridgecode) << endl;
+    zapp.canMove(cardId, bridgecode) ? cout << "True" << endl : cout << "False" << endl;
 }
 
 /**
@@ -213,6 +196,25 @@ void getCardInfo() {
     int cardId;
     cin >> cardId;
     cout << zapp.getCardDetails(cardId) << endl;
+}
+
+int getOption() {
+    cout << "what would you like to do?" << endl;
+    cout << "0. Quit" << endl;
+    cout << "1. List all area details" << endl;
+    cout << "2. List all cards in each area" << endl;
+    cout << "3. list cards in a specified area" << endl;
+    cout << "4. find the location of card" << endl;
+    cout << "5. say if card can move by bridge" << endl;
+    cout << "6. move a card by brigde" << endl;
+    cout <<"7. top up credits" << endl;
+    cout << "8. get card details" << endl;
+    cout << "9. list all cards in one area" << endl;
+
+    cout << "Enter your choice: " << endl;
+    int option;
+    cin >> option;
+    return option;
 }
 
 void runUI() {
@@ -246,12 +248,11 @@ void runUI() {
 
             default:
                 cout << "enter  a valid choice" << endl;
-
         }
         choice = getOption();
     }
 }
 
 int main() {
-    ParkUI UI =
+    runUI();
 }

@@ -4,16 +4,16 @@
 
 #ifndef ZAPP_BRIDGE_H
 #define ZAPP_BRIDGE_H
-#include "../Area/Area.h"
+#include "../area/area.h"
 
-class Bridge {
-    Area *fromArea = nullptr;
-    Area *destinationArea = nullptr;
+class bridge {
+    area *fromArea = nullptr;
+    area *destinationArea = nullptr;
     string bridgeCode;
 
     public:
     //constructor
-    Bridge(Area*, Area*,   const string &);
+    bridge(area*, area*,   const string &);
 
     /**
      *return the bridge code of the specified bridge
@@ -23,12 +23,12 @@ class Bridge {
     /**
      *return the source area of the bridge
     **/
-    Area* getFromArea() const;
+    area* getFromArea() const;
 
     /**
      *return the destionation area of the bridge
     **/
-    Area* getDestinationArea() const;
+    area* getDestinationArea() const;
 
     /**Checks the eligibility of a card to cross a bridge
      @return true if a card is eligible to cross the bridge and false otherwise

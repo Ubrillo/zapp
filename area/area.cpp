@@ -2,35 +2,35 @@
 // Created by ubril on 6/16/2026.
 //
 
-#include "Area.h"
+#include "area.h"
 #include <algorithm>
 #include <utility>
 
-Area::Area(const int areaNo, const string &areaName, const int areaRating, int capacity) {
+area::area(const int areaNo, const string &areaName, const int areaRating, int capacity) {
     this->areaNo = areaNo;
     this->areaName = areaName;
     this->areaRating = areaRating;
     this->capacity = capacity;
 }
 
-int Area::getRefNo() const {
+int area::getRefNo() const {
     return areaNo;
 }
 
-string Area::getAreaName() const { return areaName; }
+string area::getAreaName() const { return areaName; }
 
-int Area::getAreaRating() const { return areaRating; }
+int area::getAreaRating() const { return areaRating; }
 
-int Area::getCapacity() const { return capacity; }
+int area::getCapacity() const { return capacity; }
 
-void Area::enter(Card *card)  {
+void area::enter(Card *card)  {
     if (capacity) {
         cards.push_back(card);
         capacity--;
     }
 }
 
-void Area::leave(int id) {
+void area::leave(int id) {
     for (auto item = cards.begin(); item != cards.end(); ++item) {
         if ((*item)->getId() == id) {
             cards.erase(item);
@@ -40,15 +40,15 @@ void Area::leave(int id) {
     capacity++;
 }
 
-bool Area::isAvailable() const {
+bool area::isAvailable() const {
     return cards.size() < capacity ?  true : false;
 }
 
-string Area::checkCapacity() const {
+string area::checkCapacity() const {
     return (capacity > 0) ? "space avialable" : "area full!!";
 }
 
-string Area::listCards()  {
+string area::listCards()  {
     string str = "";
     int count = 1;
     for (Card *card : cards) {
@@ -58,7 +58,7 @@ string Area::listCards()  {
     return str;
 }
 
-string Area::findCard(const int id) const{
+string area::findCard(const int id) const{
     for (Card *card: cards) {
         if (card->getId() == id) {
             return card->toString();
@@ -67,11 +67,11 @@ string Area::findCard(const int id) const{
     return "";
 }
 
-bool Area::cardInArea(const int id) const {
-    return (!findCard(id).empty()) ? true : false;
+bool area::cardInArea(const int id) const {
+    return !findCard(id).empty();
 }
 
-string Area::toString() const {
+string area::toString() const {
     return "Area: "+areaName+"\nReference no: "+ to_string(areaNo)
                 +"\nLuxury Rating: "+
                     to_string(areaRating) + "\nCapacity: "+to_string(capacity);

@@ -6,11 +6,11 @@
 #define ZAPP_AREA_H
 
 #include <iostream>
-#include "../Card/Card.h"
+#include "../card/Card.h"
 #include <vector>
 using namespace std;
 
-class Area {
+class area {
 
 private:
     int areaNo{};
@@ -21,7 +21,7 @@ private:
 
 public:
     //constructor
-    Area(int areaNo, const string &areaName, int areaRating, int capacity);
+    area(int areaNo, const string &areaName, int areaRating, int capacity);
 
     /**
      return the bridge code of this area
@@ -84,6 +84,7 @@ public:
     **/
     string toString() const;
 };
+
 
 
 #endif //ZAPP_AREA_H

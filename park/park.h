@@ -9,29 +9,29 @@
 
 #include "zapp.h"
 using namespace std;
-#include "../Bridge/Bridge.h"
+#include "../bridge/bridge.h"
 
 class Park : public Zapp {
 private:
     string parkName;
     vector <Card*> cards;
-    vector <Area *> areas;
-    vector<Bridge *> bridges;
+    vector <area *> areas;
+    vector<bridge *> bridges;
 
-    Area lobby = Area(0, "Lobby", 0, 1000);
-    Area concourse = Area(1, "Concourse", 1, 100);
-    Area  waterWorld = Area(2, "WaterWorld", 3, 10);
-    Area wildWest = Area(3, "WildWest", 5, 2);
-    Area solitaire = Area(4, "Solitaire", 1, 1);
+    area lobby = area(0, "Lobby", 0, 1000);
+    area concourse = area(1, "Concourse", 1, 100);
+    area  waterWorld = area(2, "WaterWorld", 3, 10);
+    area wildWest = area(3, "WildWest", 5, 2);
+    area solitaire = area(4, "Solitaire", 1, 1);
 
-    Bridge ABC1 =  Bridge(&lobby, &concourse, "ABC1");
-    Bridge BCD2 =  Bridge(&concourse, &lobby, "BCD2");
-    Bridge CDE3 =  Bridge(&concourse, &waterWorld, "CDE3");
-    Bridge DEF4 =  Bridge(&waterWorld, &concourse, "DEF4");
-    Bridge JKL8 =  Bridge(&waterWorld, &wildWest, "JKL8");
-    Bridge EFG5 =  Bridge(&wildWest,&concourse, "EFG5");
-    Bridge GHJ6 =  Bridge(&concourse, &solitaire, "GHJ6");
-    Bridge HJK7 =  Bridge(&solitaire, &concourse, "HJK7");
+    bridge ABC1 =  bridge(&lobby, &concourse, "ABC1");
+    bridge BCD2 =  bridge(&concourse, &lobby, "BCD2");
+    bridge CDE3 =  bridge(&concourse, &waterWorld, "CDE3");
+    bridge DEF4 =  bridge(&waterWorld, &concourse, "DEF4");
+    bridge JKL8 =  bridge(&waterWorld, &wildWest, "JKL8");
+    bridge EFG5 =  bridge(&wildWest,&concourse, "EFG5");
+    bridge GHJ6 =  bridge(&concourse, &solitaire, "GHJ6");
+    bridge HJK7 =  bridge(&solitaire, &concourse, "HJK7");
 
     Card Lynn =  Card(1000, "Lynn", 5, 10);
     Card May =  Card(1001, "May", 3, 20);
@@ -52,8 +52,8 @@ private:
     void loadCards();
 
     Card* getCard(int id);
-    Area* getArea(const string &name);
-    Bridge* getBridge(const string &name);
+    area* getArea(const string &name);
+    bridge* getBridge(const string &name);
 
 public:
     Park(string name);

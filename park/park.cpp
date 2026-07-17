@@ -59,8 +59,8 @@ Card* Park::getCard(const int id) {
     return nullptr;
 }
 
-Area *Park::getArea(const string &name) {
-    for (auto &area : areas) {
+area *Park::getArea(const string &name) {
+    for (area *area : areas) {
         if (area->getAreaName() == name) {
             return area;
         }
@@ -68,8 +68,8 @@ Area *Park::getArea(const string &name) {
     return nullptr;
 }
 
-Bridge* Park::getBridge(const string &name) {
-    for (auto &bridge : bridges) {
+bridge* Park::getBridge(const string &name) {
+    for (bridge *bridge : bridges) {
         if (bridge->getBridgeCode() == name) {
             return bridge;
         }
@@ -83,7 +83,7 @@ Bridge* Park::getBridge(const string &name) {
    */
 string Park::toString() {
     string str = "=============PARK NAME: "+parkName + "================";
-    for (Area *area : areas) {
+    for (area *area : areas) {
         str += "\nArea: "+ area->getAreaName() + "\n" + area->listCards();
     }
     return str;
@@ -107,7 +107,7 @@ string Park::getCardDetails(int id) {
  * @return the name of the Area which contains the card, or null
  **/
 string Park::getCardLocation(int ccd) {
-    for (Area *area: areas) {
+    for (area *area: areas) {
         if (area->cardInArea(ccd) == ccd) {
             return area->getAreaName();
         }
@@ -121,7 +121,7 @@ string Park::getCardLocation(int ccd) {
  * @return id number of area
  */
 int Park::getAreaNumber(string name) {
-    for (Area *area : areas) {
+    for (area *area : areas) {
         if (area->getAreaName() == name) {
             return area->getRefNo();
         }
@@ -134,7 +134,7 @@ int Park::getAreaNumber(string name) {
  * @return a String representation of all cards on specified area
  **/
 string Park::getAllCardsInOneArea(string areaName) {
-    for (Area *area : areas) {
+    for (area *area : areas) {
         if (area->getAreaName() == areaName) {
             return "Cards in area: "+area->getAreaName()+"\n"+ area->listCards();
         }
@@ -146,7 +146,7 @@ string Park::getAllCardsInOneArea(string areaName) {
  * @return a String representation of all cards on specified area
  **/
 string Park::getAllCardsInAllAreas() {
-    for (Area *area : areas) {
+    for (area *area : areas) {
         return getAllCardsInOneArea(area->getAreaName());
     }
     return "";
@@ -167,7 +167,7 @@ string Park::getAllCardsInAllAreas() {
 
 bool Park::canMove(int cardId, std::string bridgeCode) {
     Card *card = getCard(cardId);
-    Bridge *bridge = getBridge(bridgeCode);
+    bridge *bridge = getBridge(bridgeCode);
     if (card && bridge) {
         return bridge -> entryAllowed(*card);
     }
@@ -195,7 +195,7 @@ bool Park::canMove(int cardId, std::string bridgeCode) {
 
 string Park::move(int cardId, string bridgeCode) {
     Card *card = getCard(cardId);
-    Bridge *bridge = getBridge(bridgeCode);
+    bridge *bridge = getBridge(bridgeCode);
 
     if (card == nullptr) {
         return "ACCESS DENIED !!! INVALID CARD!!!";
@@ -204,8 +204,8 @@ string Park::move(int cardId, string bridgeCode) {
         return "ACCESS DENIED!!! INVALID BRIDGE CODE!!";
     }
 
-    Area *startArea = bridge->getFromArea();
-    Area *destinationArea = bridge->getDestinationArea();
+    area *startArea = bridge->getFromArea();
+    area *destinationArea = bridge->getDestinationArea();
     if (canMove(cardId, bridgeCode)) {
         card -> chargeCard();
         destinationArea -> enter(card);

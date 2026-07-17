@@ -4,8 +4,8 @@ project(zapp)
 set(CMAKE_CXX_STANDARD 20)
 
 add_executable(zapp main.cpp
-        Card/Card.cpp
-        Card/Card.h
+        card/card.cpp
+        card/card.h
         Area/Area.cpp
         Area/Area.h
         Area/AreaTester.cpp
@@ -17,4 +17,6 @@ add_executable(zapp main.cpp
         park/park.h
         park/zapp.h
         park/parkTester.cpp
-        park/parkUI.cpp)
+        park/parkUI.cpp
+        card/TouristCard.h
+        card/ChildCard.h)
