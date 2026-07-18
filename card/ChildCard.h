@@ -4,24 +4,33 @@
 
 #ifndef ZAPP_CHILDCARD_H
 #define ZAPP_CHILDCARD_H
+
 #include "Card.h"
 using namespace std;
 
-class Child :  public Card {
-    int zones = 0;
+class ChildCard :  public Card {
+private:
+    int zonesVisited = 0;
     int parentId;
-    const int MIN_CHARGE = 0;
+    const int MIN_CHARGEX = 0;
 
 public:
-    Child(int id, const string& name, int parentId):
-        Card(id, name, 10, 0), parentId(parentId) {
-    }
+    /*Constructor*/
+    ChildCard(int id, const string &name, int parentId);
 
-    string  toString();
+    /**Return the detials of a card as a String object**/
+    string  toString() override;
 
-    bool enoughCredit();
+    /**Checks if a card has sufficient credit to cross a bridge.
+    * return true if yes and false if no
+    **/
+    bool enoughCredit() const override;
 
-    void chargeCard();
+    /**Deduct the minum charge amount from the card
+    *increase the point by 1
+    **/
+    void chargeCard() override;
+
 };
 
 #endif //ZAPP_CHILDCARD_H

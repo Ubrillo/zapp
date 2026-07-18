@@ -63,6 +63,16 @@ void  Card::pointToCredit() {
         }
     }
 
+void Card::deductCredit(int amount) {
+    if (enoughCredit()) {
+        this->credit -= amount;
+    }
+}
+
+void Card::addPoint(int amount) {
+    this->point += amount;
+}
+
     string Card::toString() {
         string str = "Card ID: "+to_string(id) +
             "\nGuest Name: "+name+

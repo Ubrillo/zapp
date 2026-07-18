@@ -13,16 +13,23 @@ class Card{
 private:
     int id, rating, credit, point;
     string name;
-
     const int MIN_CHARGE = 4;
     const  int POINT_RATE = 3;
 
+protected:
+   /*reduce credit by certain amount */
+   void deductCredit(int amount);
+
+   /*increase point by
+  *@amount*/
+   void addPoint(int amount);
 
 public:
      /**
      *constructor
     **/
     Card(int id, const string &name, int rating, int credit);
+
 
     /**
      * return the ID of this card
@@ -66,15 +73,15 @@ public:
     **/
     void addCredit(int newCredit);
 
-  /**Checks if a card has sufficient credit to cross a bridge.
+   /**Deduct the minum charge amount from the card
+    *increase the point by 1
+   **/
+    virtual void chargeCard();
+
+   /**Checks if a card has sufficient credit to cross a bridge.
    * return true if yes and false if no
   **/
-    void chargeCard();
-
-  /**Deduct the minum charge amount from the card
-   *increase the point by 1
-  **/
-    bool enoughCredit() const;
+    virtual bool enoughCredit() const;
 
    /**Convert points to credit
     *increase the credit balance by how much credits the points can make
@@ -84,7 +91,8 @@ public:
   /**Return the detials of a card as a String object
     *
    **/
-    string toString();
+    virtual string toString();
+
 };
 
 #endif //ZAPP_CARD_H
