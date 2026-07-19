@@ -12,7 +12,7 @@ class ChildCard :  public Card {
 private:
     int zonesVisited = 0;
     int parentId;
-    const int MIN_CHARGEX = 0;
+    const int MIN_CHARGE = 0;
 
 public:
     /*Constructor*/

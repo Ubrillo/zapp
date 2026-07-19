@@ -8,7 +8,7 @@ ChildCard::ChildCard(int id, const string &name, int parentId)
     parentId(parentId) {}
 
 void ChildCard::chargeCard() {
-    deductCredit(MIN_CHARGEX);
+    deductCredit(MIN_CHARGE);
     zonesVisited++;
 }
 bool ChildCard::enoughCredit() const{
