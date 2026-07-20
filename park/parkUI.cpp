@@ -10,8 +10,6 @@ using namespace std;
 Park fantasia("Fantasia Pleasure Park");
 Zapp &zapp = fantasia;
 
-
-
 /**
  * display the area of a speicifed card
  * @param: card_id - the id of the card
@@ -33,7 +31,6 @@ void cardLocator() {
     findCardLocation(id);
 }
 
-
 /**
  * @param cardId -  the ID of the card trying to move
  * @param  brCode - the bridge code the card is trying move on.
@@ -42,7 +39,6 @@ void cardLocator() {
 void moveNow(int cardId, string brCode) {
     cout << zapp.move(cardId, brCode) << endl;
 }
-
 
 /**
  * display and get appropriate input from terminal
@@ -74,80 +70,25 @@ void convertPoints(int cardId) {
     cout << details << endl;
 }
 
-
 /**Update the credit of a card and display the updated details of the card
  * @param: id - the card id to update
  * @param: creds - the amount of credit to update the card with.
  * display successful if update was successful.
  */
 
-void updateCredits(int cardId, int credit) {
-    zapp.topUpCredits(cardId, credit);
+void updateCredits() {
+    cout << "Enter Card ID:" << endl;
+    int cardId, amount;
+    cin >> cardId;
+    cout << "Enter credit amount:"<< endl;
+    cin >> amount;
+    zapp.topUpCredits(cardId, amount);
     string details = zapp.getCardDetails(cardId);
     if (details.empty()) {
-        cout << "card not found!!" << endl;
+        cout << "CARD NOT FOUND!!" << endl;
         return;
     }
     cout << details << endl;
-
-}
-
-
-/**
- * @param: option - the option for credit card update method
- * display appropriate ouput text on the terminal
- * triggers corresponding credit card update methods of the paramater
- */
-
-void creditCard(int option) {
-    cout << "please enter card id" << endl;
-    int cardId;
-    cin >> cardId;
-
-    if (option == 1) {
-        cout << "please enter credit amount" << endl;
-        int credit;
-        cin >> credit;
-        updateCredits(cardId, credit);
-    }
-    else if (option == 2) {
-        convertPoints(cardId);
-    }
-}
-
-/**
- * display the credit card update options
- * gets  input from terminal
- */
-int creditOption() {
-    cout << "0. Main menu" << endl;
-    cout << "1. recharge card" << endl;
-    cout << "2. convert point to credit" << endl;
-
-    int choice;
-    cin >> choice;
-    return choice;
-}
-
-
-/**
- * triggers credit card update on the corresponding input from the terminal
- */
-void creditSelect() {
-    int option = creditOption();
-    while (option != 0) {
-        if (option == 0) {
-            break;
-        }
-        else if (option == 1) {
-            creditCard(option);
-            break;
-        }
-        else if (option == 2) {
-            creditCard(option);
-            break;
-        }
-    }
 }
 
 /**
@@ -161,8 +102,8 @@ void listAllAreas() {
  * display all cards in all areas of the park on the screen
  */
 void listAllCards() {
-    string store = zapp.getAllCardsInAllAreas();
-    cout << store << endl;
+    string data = zapp.getAllCardsInAllAreas();
+    cout << data << endl;
 }
 
 /**
@@ -172,7 +113,8 @@ void listOneArea() {
     cout << "Enter area name: " << endl;
     string str;
     cin >> str;
-    cout << zapp.getAllCardsInOneArea(str) <<endl;
+    string data = zapp.getAllCardsInOneArea(str);
+    data.empty() ? cout << "Invalid Area Name!" <<endl : cout << data << endl;
 }
 
 /**
@@ -182,17 +124,17 @@ void tryTravel() {
     cout << "Enter card ID" << endl;
     int cardId;
     cin >> cardId;
-    cout << "please input bridgecode in UPPERCASE:" << endl;
-    string bridgecode;
-    cin >> bridgecode;
-    zapp.canMove(cardId, bridgecode) ? cout << "True" << endl : cout << "False" << endl;
+    cout << "please input Bridgecode in UPPERCASE:" << endl;
+    string brCode;
+    cin >> brCode;
+    zapp.canMove(cardId, brCode) ? cout << "True" << endl : cout << "False" << endl;
 }
 
 /**
  * display the card details on the terminal
  */
 void getCardInfo() {
-    cout << "enter card id" << endl;
+    cout << "Enter Card ID:" << endl;
     int cardId;
     cin >> cardId;
     cout << zapp.getCardDetails(cardId) << endl;
@@ -240,7 +182,7 @@ void runUI() {
                 moveCard();
                 break;
             case 7:
-                creditSelect();
+                updateCredits();
                 break;
             case 8:
                 getCardInfo();

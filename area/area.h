@@ -10,7 +10,7 @@
 #include <vector>
 using namespace std;
 
-class area {
+class Area {
 
 private:
     int areaNo{};
@@ -21,7 +21,7 @@ private:
 
 public:
     //constructor
-    area(int areaNo, const string &areaName, int areaRating, int capacity);
+    Area(int areaNo, const string &areaName, int areaRating, int capacity);
 
     /**
      return the bridge code of this area

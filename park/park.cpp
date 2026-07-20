@@ -1,12 +1,11 @@
 //
 // Created by ubril on 6/25/2026.
 //
-
 #include "park.h"
+
 Park::Park(string name) {
 
     parkName = name;
-
     loadAreas();
     setUpBridges();
     loadCards();
@@ -14,10 +13,6 @@ Park::Park(string name) {
     for (Card *card : cards) {
         lobby.enter(card);
     }
-
-    // lobby.enter(Tourist);
-    // lobby.enter(Child);
-    // lobby.enter(Company);
 }
 
 void Park::loadAreas() {
@@ -37,6 +32,9 @@ void Park::loadCards() {
     cards.push_back(&Quin);
     cards.push_back(&Raj);
     cards.push_back(&Tel);
+    cards.push_back(&TourGuide);
+    cards.push_back(&BabyCard);
+    cards.push_back(&Admin);
 }
 
 void Park::setUpBridges() {
@@ -50,8 +48,8 @@ void Park::setUpBridges() {
     bridges.push_back(&HJK7);
 }
 
-Card* Park::getCard(const int id) {
-    for (auto *card : cards) {
+Card *Park::getCard(const int id) {
+    for (Card *card : cards) {
         if (card->getId() == id) {
             return card;
         }
@@ -59,8 +57,8 @@ Card* Park::getCard(const int id) {
     return nullptr;
 }
 
-area *Park::getArea(const string &name) {
-    for (area *area : areas) {
+Area *Park::getArea(const string &name) {
+    for (Area *area : areas) {
         if (area->getAreaName() == name) {
             return area;
         }
@@ -68,8 +66,8 @@ area *Park::getArea(const string &name) {
     return nullptr;
 }
 
-bridge* Park::getBridge(const string &name) {
-    for (bridge *bridge : bridges) {
+Bridge *Park::getBridge(const string &name) {
+    for (Bridge *bridge : bridges) {
         if (bridge->getBridgeCode() == name) {
             return bridge;
         }
@@ -83,7 +81,7 @@ bridge* Park::getBridge(const string &name) {
    */
 string Park::toString() {
     string str = "=============PARK NAME: "+parkName + "================";
-    for (area *area : areas) {
+    for (Area *area : areas) {
         str += "\nArea: "+ area->getAreaName() + "\n" + area->listCards();
     }
     return str;
@@ -107,8 +105,8 @@ string Park::getCardDetails(int id) {
  * @return the name of the Area which contains the card, or null
  **/
 string Park::getCardLocation(int ccd) {
-    for (area *area: areas) {
-        if (area->cardInArea(ccd) == ccd) {
+    for (Area *area: areas) {
+        if (area->cardInArea(ccd)) {
             return area->getAreaName();
         }
     }
@@ -121,7 +119,7 @@ string Park::getCardLocation(int ccd) {
  * @return id number of area
  */
 int Park::getAreaNumber(string name) {
-    for (area *area : areas) {
+    for (Area *area : areas) {
         if (area->getAreaName() == name) {
             return area->getRefNo();
         }
@@ -134,7 +132,7 @@ int Park::getAreaNumber(string name) {
  * @return a String representation of all cards on specified area
  **/
 string Park::getAllCardsInOneArea(string areaName) {
-    for (area *area : areas) {
+    for (Area *area : areas) {
         if (area->getAreaName() == areaName) {
             return "Cards in area: "+area->getAreaName()+"\n"+ area->listCards();
         }
@@ -146,10 +144,11 @@ string Park::getAllCardsInOneArea(string areaName) {
  * @return a String representation of all cards on specified area
  **/
 string Park::getAllCardsInAllAreas() {
-    for (area *area : areas) {
-        return getAllCardsInOneArea(area->getAreaName());
+    string str = "";
+    for (Area *area : areas) {
+        str+= getAllCardsInOneArea(area->getAreaName())+"\n";
     }
-    return "";
+    return str.empty()? "" : str;
 }
 
 /**Returns true if a Card is allowed to move using the bridge, false otherwise
@@ -167,9 +166,9 @@ string Park::getAllCardsInAllAreas() {
 
 bool Park::canMove(int cardId, std::string bridgeCode) {
     Card *card = getCard(cardId);
-    bridge *bridge = getBridge(bridgeCode);
+    Bridge *bridge = getBridge(bridgeCode);
     if (card && bridge) {
-        return bridge -> entryAllowed(*card);
+        return bridge -> entryAllowed(card);
     }
     return false;
 }
@@ -193,9 +192,9 @@ bool Park::canMove(int cardId, std::string bridgeCode) {
  * @return a String giving the result of the request
  **/
 
-string Park::move(int cardId, string bridgeCode) {
+string Park::move(int cardId, string brCode) {
     Card *card = getCard(cardId);
-    bridge *bridge = getBridge(bridgeCode);
+    Bridge *bridge = getBridge(brCode);
 
     if (card == nullptr) {
         return "ACCESS DENIED !!! INVALID CARD!!!";
@@ -204,31 +203,37 @@ string Park::move(int cardId, string bridgeCode) {
         return "ACCESS DENIED!!! INVALID BRIDGE CODE!!";
     }
 
-    area *startArea = bridge->getFromArea();
-    area *destinationArea = bridge->getDestinationArea();
-    if (canMove(cardId, bridgeCode)) {
-        card -> chargeCard();
-        destinationArea -> enter(card);
-        startArea -> leave(cardId);
+    Area *startArea = bridge->getFromArea();
+    Area *destinationArea = bridge->getDestinationArea();
 
+    if (canMove(cardId, brCode)) {
+        bridge->move(card);
+        card->chargeCard();
         return "ACCESS GRANTED!!!";
+        //
+        // destinationArea -> enter(card);
+        // startArea -> leave(cardId);
+
     }
     else if (destinationArea->getAreaRating() > card->getRating()) {
         return "ACCESS DENIED!!!  Low Rating!!!";
     }
     else if (destinationArea -> isAvailable() == false ) {
-        return "ACCESS DENIED!!! CARD NOT FOUND IN SOURCE AREA!!!";
+        return "ACCESS DENIED! DESTIINATION AREA HAS NO AVAILABILITY";
     }
-    else if (card->enoughCredit()) {
+    else if (startArea->cardInArea(card->getId()) == false) {
+        return "ACCESS DENIED!!! CARD NOT CROSS THIS BRIDGE";
+    }
+    else if (card->enoughCredit() == false) {
         return "ACCESS DENIED!!! INSUFFICIENT CREDIT. Please, recharge or convert points to credit!!!\n";
     }
-    return "";
+    return "....something wrong \nENTRY DENIED!";
 }
 
-void Park::topUpCredits(int cardId, int credit) {
+void Park::topUpCredits(int cardId, int amount) {
     Card *card = getCard(cardId);
     if (card) {
-        card -> pointToCredit();
+        card -> addCredit(amount);
     }
 }
 

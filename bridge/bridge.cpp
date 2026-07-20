@@ -6,32 +6,40 @@
 
 #include <utility>
 
-bridge::bridge( area *fromArea,  area *toArea, const string &code):
+Bridge::Bridge( Area *fromArea,  Area *toArea, const string &code):
     fromArea(fromArea),
     destinationArea(toArea),
     bridgeCode(code)
 {}
 
-string bridge::getBridgeCode() const{
+string Bridge::getBridgeCode() const{
     return bridgeCode;
 }
 
-area* bridge::getFromArea() const {
+Area* Bridge::getFromArea() const {
     return fromArea;
 }
 
-area* bridge::getDestinationArea() const {
+Area* Bridge::getDestinationArea() const {
     return destinationArea;
 }
 
-bool bridge::entryAllowed(const Card &card) const {
-    return (card.getRating() >= destinationArea->getAreaRating())&&
-        (destinationArea->isAvailable()) &&
-        (card.enoughCredit()) &&
-        (fromArea->cardInArea(card.getId()));
+void Bridge::move(Card *card) const {
+    if (entryAllowed(card)) {
+        destinationArea->enter(card);
+        fromArea->leave(card->getId());
+    }
 }
 
-string bridge::toString() const {
+bool Bridge::entryAllowed(const Card *card) const {
+    return (card->getRating() >= destinationArea->getAreaRating())&&
+        (destinationArea->isAvailable()) &&
+        (card->enoughCredit()) &&
+        (fromArea->cardInArea(card->getId()));
+}
+
+
+string Bridge::toString() const {
     return "Bridge Code: "+bridgeCode+
         "\nSource Area: "+ fromArea->getAreaName() +"\n";
 }

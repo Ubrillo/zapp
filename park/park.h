@@ -6,32 +6,36 @@
 #define ZAPP_PARK_H
 #include<iostream>
 #include <vector>
+using namespace std;
 
 #include "zapp.h"
-using namespace std;
 #include "../bridge/bridge.h"
+#include "../card/TouristCard.h"
+#include "../card/ChildCard.h"
+#include "../card/CompanyCard.h"
+
 
 class Park : public Zapp {
 private:
     string parkName;
     vector <Card*> cards;
-    vector <area *> areas;
-    vector<bridge *> bridges;
+    vector <Area *> areas;
+    vector<Bridge *> bridges;
 
-    area lobby = area(0, "Lobby", 0, 1000);
-    area concourse = area(1, "Concourse", 1, 100);
-    area  waterWorld = area(2, "WaterWorld", 3, 10);
-    area wildWest = area(3, "WildWest", 5, 2);
-    area solitaire = area(4, "Solitaire", 1, 1);
+    Area lobby = Area(0, "Lobby", 0, 1000);
+    Area concourse = Area(1, "Concourse", 1, 100);
+    Area  waterWorld = Area(2, "WaterWorld", 3, 10);
+    Area wildWest = Area(3, "WildWest", 5, 2);
+    Area solitaire = Area(4, "Solitaire", 1, 1);
 
-    bridge ABC1 =  bridge(&lobby, &concourse, "ABC1");
-    bridge BCD2 =  bridge(&concourse, &lobby, "BCD2");
-    bridge CDE3 =  bridge(&concourse, &waterWorld, "CDE3");
-    bridge DEF4 =  bridge(&waterWorld, &concourse, "DEF4");
-    bridge JKL8 =  bridge(&waterWorld, &wildWest, "JKL8");
-    bridge EFG5 =  bridge(&wildWest,&concourse, "EFG5");
-    bridge GHJ6 =  bridge(&concourse, &solitaire, "GHJ6");
-    bridge HJK7 =  bridge(&solitaire, &concourse, "HJK7");
+    Bridge ABC1 =  Bridge(&lobby, &concourse, "ABC1");
+    Bridge BCD2 =  Bridge(&concourse, &lobby, "BCD2");
+    Bridge CDE3 =  Bridge(&concourse, &waterWorld, "CDE3");
+    Bridge DEF4 =  Bridge(&waterWorld, &concourse, "DEF4");
+    Bridge JKL8 =  Bridge(&waterWorld, &wildWest, "JKL8");
+    Bridge EFG5 =  Bridge(&wildWest,&concourse, "EFG5");
+    Bridge GHJ6 =  Bridge(&concourse, &solitaire, "GHJ6");
+    Bridge HJK7 =  Bridge(&solitaire, &concourse, "HJK7");
 
     Card Lynn =  Card(1000, "Lynn", 5, 10);
     Card May =  Card(1001, "May", 3, 20);
@@ -43,17 +47,17 @@ private:
     Card Sol =  Card(1007, "Sol", 7, 20);
     Card Tel =  Card(1008, "Tel", 6, 24);
 
-    // Card Tourist =  TouristCard(2000, "Grandson", 10, 10);
-    // Card Child =  ChildCard(3000, "Child", 1004);
-    // Card Company =  CompanyCard(4000, "kompany", 10);
+    TouristCard TourGuide{2000, "TourGuide"};
+    ChildCard BabyCard{3000, "BabyCard", 1004};
+    CompanyCard Admin{4000, "Admin", 10, 30};
 
     void loadAreas();
     void setUpBridges();
     void loadCards();
 
     Card* getCard(int id);
-    area* getArea(const string &name);
-    bridge* getBridge(const string &name);
+    Area* getArea(const string &name);
+    Bridge* getBridge(const string &name);
 
 public:
     Park(string name);

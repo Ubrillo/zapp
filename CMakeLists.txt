@@ -9,7 +9,6 @@ add_executable(zapp main.cpp
         Area/Area.cpp
         Area/Area.h
         Area/AreaTester.cpp
-        Card/CardTester.cpp
         Bridge/Bridge.cpp
         Bridge/Bridge.h
         Bridge/BridgeTester.cpp
@@ -19,4 +18,8 @@ add_executable(zapp main.cpp
         park/parkTester.cpp
         park/parkUI.cpp
         card/TouristCard.h
-        card/ChildCard.h)
+        card/ChildCard.h
+        card/TouristCard.cpp
+        card/ChildCard.cpp
+        card/CompanyCard.cpp
+        card/CompanyCard.h)

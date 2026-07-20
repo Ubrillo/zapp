@@ -6,14 +6,14 @@
 #define ZAPP_BRIDGE_H
 #include "../area/area.h"
 
-class bridge {
-    area *fromArea = nullptr;
-    area *destinationArea = nullptr;
+class Bridge {
+    Area *fromArea = nullptr;
+    Area *destinationArea = nullptr;
     string bridgeCode;
 
     public:
     //constructor
-    bridge(area*, area*,   const string &);
+    Bridge(Area*, Area*,   const string &);
 
     /**
      *return the bridge code of the specified bridge
@@ -23,24 +23,27 @@ class bridge {
     /**
      *return the source area of the bridge
     **/
-    area* getFromArea() const;
+    Area* getFromArea() const;
 
     /**
      *return the destionation area of the bridge
     **/
-    area* getDestinationArea() const;
+    Area* getDestinationArea() const;
 
     /**Checks the eligibility of a card to cross a bridge
      @return true if a card is eligible to cross the bridge and false otherwise
      @param card - the card to be checked if eligible to cross the bridge
     **/
 
-    bool entryAllowed(const Card&) const;
+    bool entryAllowed(const Card *) const;
 
    /**Return the details of the bridge as a string item.
   *return the details of the bridge
   **/
    string toString() const;
+
+   /*move card from source area to destination area*/
+   void move(Card *card) const;
 };
 
 

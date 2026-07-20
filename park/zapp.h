@@ -22,7 +22,6 @@ public:
      */
     virtual std::string getCardDetails(int cardId) = 0;
 
-
     /**Returns the name of the area which contains the specified card or null
      * @param ccd - the specified card
      * @return the name of the Area which contains the card, or null
@@ -99,6 +98,4 @@ public:
     virtual void convertPoints(int cdId) = 0;
 
 };
-
-
 #endif //ZAPP_ZAPP_H
